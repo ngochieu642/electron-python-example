@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  gui_app:
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    container_name: electron_python_example
+    environment:
+      DISPLAY: $DISPLAY
+    networks:
+      - dev-network
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+    # command: "tail -f /dev/null"
+
+networks:
+  dev-network:
+    driver: bridge
+    external:
+      name: test-gui-network
